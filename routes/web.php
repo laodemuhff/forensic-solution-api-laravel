@@ -1,0 +1,41 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+
+Route::group(['middleware' => ['web']], function () {
+
+    //Front
+    Route::get('/', 'PagesController@getIndex');
+    
+    Auth::routes();
+    
+  // Authentication Routes...
+  Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+  Route::post('/login', 'Auth\LoginController@login');
+  Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+
+  //Dashboard Admin
+  Route::get('/admin', 'DashboardController@index')->name('dashboard');
+
+    
+    
+   // Users
+   Route::resource('admin/users', 'UserController');
+   // Aplikasi
+   Route::resource('admin/apps', 'AppController', ['except' => ['create']]);
+   // Karakteristik
+   Route::resource('admin/chars', 'CharController', ['except' => ['create']]);
+   //Aturan
+   Route::resource('admin/aturan', 'AturanController');
+    
+  });
