@@ -8,9 +8,10 @@ class Aturan extends Model
 {
   protected $table = 'aturan';
   protected $primaryKey = 'id_aturan';
-    public function Apps()
+
+    public function apps()
     {
-      return $this->belongsTo('App\App');
+      return $this->belongsTo('App\App', 'id_aplikasi');
     }
 
     public function chars()

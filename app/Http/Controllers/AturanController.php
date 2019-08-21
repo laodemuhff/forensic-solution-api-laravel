@@ -26,10 +26,10 @@ class AturanController extends Controller
      */
     public function index()
     {
-        // create a variable and store all the blog post in it from the database
-        $aturan = Aturan::orderBy('id', 'desc')->paginate(10);
+        // create a variable and store all the blog aturan in it from the database
+        $aturans = Aturan::orderBy('id_aturan', 'desc')->paginate(10);
         //return a view and pass in the above variable
-        return view('admin.aturan.index')->withAturan($aturan);
+        return view('admin.aturan.index')->withAturans($aturans);
     }
 
     /**
@@ -39,9 +39,15 @@ class AturanController extends Controller
      */
     public function create()
     {
-      $app = App::all();
-      $char = Char::all();
-        return view('admin.posts.create')->withApps($app)->withChars($char);
+      $apps = App::all();
+      $chars = Char::all();
+      
+      $chars = Char::all();
+      $chars2 = array();
+      foreach ($chars as $char) {
+        $chars2[$char->id_karakteristik] = $char->nama_karakteristik;
+      }
+        return view('admin.aturan.create')->withApps($apps)->withChars($chars2);
     }
 
     /**
@@ -54,38 +60,30 @@ class AturanController extends Controller
     {
         //  validate the data
         $this->validate($request, array(
-          'title' => 'required|max:255',
-          'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
-          'category_id' => 'required|integer',
-          'body'  => 'required',
-          'featured_image' => 'sometimes|image'
+          'nama_aturan' => 'required|max:255',
+          'id_aplikasi' => 'required|integer',
         ));
 
       // store in the database
-      $post = new Aturan;
+      $aturan = new Aturan;
 
-      $post->title = $request->title;
-      $post->slug = $request->slug;
-      $post->category_id = $request->category_id;
-      $post->body = Purifier::clean($request->body);
+      $aturan->nama_aturan = $request->nama_aturan;
+      $aturan->id_aplikasi = $request->id_aplikasi;
 
-      // Save our image
-      if ($request->hasFile('featured_image')) {
-        $image = $request->file('featured_image');
-        $filename = time() . '.' . $image->getClientOriginalExtension();
-        $location = public_path('images/'. $filename);
-        Image::make($image)->save($location);
+      $aturan->save();
 
-        $post->image =$filename;
-      }
+      
+      if (isset($request->chars)) {
+        $aturan->chars()->sync($request->chars);
+    }else {
+      $aturan->chars()->sync(array());
+    }
 
-      $post->save();
 
-      $post->tags()->sync($request->tags, false);
 
-      Session::flash('success', 'The blog post was succesfully saved!');
+      Session::flash('success', 'The blog aturan was succesfully saved!');
 
-      return redirect()->route('posts.show', $post->id);
+      return redirect()->route('aturan.index');
     }
 
     /**
@@ -94,10 +92,10 @@ class AturanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id_aturan)
     {
-        $post = Aturan::find($id);
-        return view('admin.posts.show')->withAturan($post);
+        $aturan = Aturan::find($id_aturan);
+        return view('admin.aturan.show')->withAturan($aturan);
     }
 
     /**
@@ -106,23 +104,23 @@ class AturanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id_aturan)
     {
-        // find the post in the database and save that as a variable
-        $post = Aturan::find($id);
-        $categories = App::all();
+        // find the aturan in the database and save that as a variable
+        $aturan = Aturan::find($id_aturan);
+        $apps = App::all();
         $cats = array();
-        foreach ($categories as $category) {
-          $cats[$category->id] = $category->name;
+        foreach ($apps as $app) {
+          $cats[$app->id_aplikasi] = $app->nama_aplikasi;
         }
 
-        $tags = Char::all();
-        $tags2 = array();
-        foreach ($tags as $tag) {
-          $tags2[$tag->id] = $tag->name;
+        $chars = Char::all();
+        $chars2 = array();
+        foreach ($chars as $char) {
+          $chars2[$char->id_karakteristik] = $char->nama_karakteristik;
         }
         //return the view and pass in the variablie we previously created
-        return view('admin.posts.edit')->withAturan($post)->withCategories($cats)->withChars($tags2);
+        return view('admin.aturan.edit')->withAturan($aturan)->withApps($cats)->withChars($chars2);
     }
 
     /**
@@ -132,56 +130,36 @@ class AturanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_aturan)
     {
         // Validate the data before we use it
-        $post = Aturan::find($id);
+        $aturan = Aturan::find($id_aturan);
 
         $this->validate($request, array(
-          'title' => 'required|max:255',
-          'slug' => "required|alpha_dash|min:5|max:255|unique:posts,slug,$id",
-          'category_id' => 'required|integer',
-          'body'  => 'required',
-          'featured_image' => 'image'
+          'nama_aturan' => 'required|max:255',
+          'id_aplikasi' => 'required|integer',
         ));
 
         // Save the data to the SQLiteDatabase
-        $post = Aturan::find($id);
+        $aturan = Aturan::find($id_aturan);
 
-        $post->title = $request->input('title');
-        $post->slug =$request->input('slug');
-        $post->category_id = $request->input('category_id');
-        $post->body = Purifier::clean($request->input('body'));
+        $aturan->nama_aturan = $request->input('nama_aturan');
+        $aturan->id_aplikasi = $request->input('id_aplikasi');
 
-        if ($request->hasFile('featured_image')) {
-          // add the new photo
-          $image = $request->file('featured_image');
-          $filename = time() . '.' . $image->getClientOriginalExtension();
-          $location = public_path('images/' . $filename);
-          Image::make($image)->save($location);
-          $oldFilename = $post->image;
+        $aturan->save();
 
-          // update the database
-          $post->image = $filename;
-
-          //Delete the old photo
-          Storage::delete($oldFilename);
-        }
-
-        $post->save();
-
-        if (isset($request->tags)) {
-            $post->tags()->sync($request->tags);
+        if (isset($request->chars)) {
+            $aturan->chars()->sync($request->chars);
         }else {
-          $post->tags()->sync(array());
+          $aturan->chars()->sync(array());
         }
 
 
 
         // set flash data with success message
-        Session::flash('success', 'This post was successfully saved.');
-        // redirect with flash data to posts.show
-        return redirect()->route('posts.show', $post->id);
+        Session::flash('success', 'This aturan was successfully saved.');
+        // redirect with flash data to aturan.show
+        return redirect()->route('aturan.show', $aturan->id_aturan);
     }
 
     /**
@@ -190,15 +168,14 @@ class AturanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id_aturan)
     {
-        $post = Aturan::find($id);
-        $post->tags()->detach();
-        Storage::delete($post->image);
+        $aturan = Aturan::find($id_aturan);
+        $aturan->chars()->detach();
 
-        $post->delete();
+        $aturan->delete();
 
-        Session::flash('success', 'The post was successfully deleted.');
-        return redirect()->route('posts.index');
+        Session::flash('success', 'The aturan was successfully deleted.');
+        return redirect()->route('aturan.index');
     }
 }

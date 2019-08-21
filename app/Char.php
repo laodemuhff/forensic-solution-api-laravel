@@ -11,6 +11,6 @@ class Char extends Model
 
     public function aturans()
     {
-      return $this->belongsToMany('App\Aturan', 'aturan_karakteristik');
+      return $this->belongsToMany('App\Aturan', 'aturan_char');
     }
 }

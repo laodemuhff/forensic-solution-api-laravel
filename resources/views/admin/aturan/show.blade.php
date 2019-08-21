@@ -3,46 +3,24 @@
 @section('title', "| Aturan")
 
 @section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+
+                <div class="card-body">
     <div class="row">
       <div class="col-md-8">
-        <img src="{{ asset('images/' . $post->image) }}" alt="post image" height="400" width="800" />
-        <h1>{{ $post->title }}</h1>
-        <p class="lead">{!! $post->body !!}</p>
-
+        <h1>{{ $aturan->nama_aturan }}</h1>
+        
+            <span>Aplikasi: {{ $aturan->apps->nama_aplikasi }}</span>
         <hr>
 
-        <div class="tags">
-          @foreach ($post->tags as $tag)
-            <span class="label label-default">{{ $tag->name }}</span>
+        <div class="chars">
+          <span>Karakteristik : </span><br/>
+          @foreach ($aturan->chars as $char)
+            <span class="label label-default">{{ $char->nama_karakteristik }}</span><br/>
           @endforeach
-      </div>
-
-      <div id="backend-comments" style="margin-top: 50px;">
-            <h3>Comments <small>{{ $post->comments()->count() }} total</small></h3>
-
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Content</th>
-                  <th width="70px"></th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($post->comments as $comment)
-                <tr>
-                  <td>{{ $comment->name }}</td>
-                  <td>{{ $comment->email }}</td>
-                  <td>{{ $comment->comment }}</td>
-                  <td>
-                    <a href="{{ route('comments.edit', $comment->id) }}" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a href="{{ Route('comments.delete', $comment->id) }}" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
-                  </td>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
       </div>
 
       </div>
@@ -50,43 +28,33 @@
         <div class="well">
 
           <dl class="horizontal">
-            <label>Url:</label>
-            <p><a href="{{ route('blog.single', $post->slug) }}">{{ route('blog.single', $post->slug) }}</a></p>
-          </dl>
-
-          <dl class="horizontal">
-            <label>Category:</label>
-            <p>{{ $post->category->name }}</p>
-          </dl>
-
-          <dl class="horizontal">
             <label>Created At:</label>
-            <p>{{ date( 'M j, Y h:ia', strtotime($post->created_at)) }}</p>
+            <p>{{ date( 'M j, Y h:ia', strtotime($aturan->created_at)) }}</p>
           </dl>
 
           <dl class="horizontal">
             <label>Last Updated:</label>
-            <p>{{ date('M j, Y h:ia', strtotime($post->updated_at)) }}</p>
+            <p>{{ date('M j, Y h:ia', strtotime($aturan->updated_at)) }}</p>
           </dl>
           <hr>
 
           <div class="row">
              <div class="col-sm-6">
-               {!! Html::linkRoute('posts.edit', 'Edit', array($post->id), array('class' => 'btn btn-primary btn-block')) !!}
-
+               {!! Html::linkRoute('aturan.edit', 'Edit', array($aturan->id_aturan), array('class' => 'btn btn-primary btn-block')) !!}
              </div>
              <div class="col-sm-6">
-                 {!! Form::open(['route' => ['posts.destroy', $post->id], 'method' => 'DELETE']) !!}
+                 {!! Form::open(['route' => ['aturan.destroy', $aturan->id_aturan], 'method' => 'DELETE']) !!}
 
                  {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-block']) !!}
 
                  {!! Form::close() !!}
+                 
              </div>
            </div>
 
            <div class="row">
               <div class="col-md-12">
-                {{ Html::linkRoute('posts.index', 'See All Posts', [], ['class' => 'btn btn-default btn-block btn-h1-spacing']) }}
+                {{ Html::linkRoute('aturan.index', 'See All Posts', [], ['class' => 'btn btn-default btn-block btn-h1-spacing']) }}
               </div>
            </div>
 
