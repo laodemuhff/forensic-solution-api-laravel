@@ -14,9 +14,9 @@
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
-
       <!-- Divider -->
       <hr class="sidebar-divider">
+      @if (Auth::user()->admin == 1)
 
       <!-- Heading -->
       <div class="sidebar-heading">
@@ -53,8 +53,21 @@
           <span>Users</span></a>
       </li>
 
+      <li class="nav-item active">
+        <a class="nav-link" href="/admin/histories">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Histories</span></a>
+      </li>
+
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
+      @else
+      <li class="nav-item active">
+        <a class="nav-link" href="/">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Cek Tools</span></a>
+      </li>
+      @endif
 
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">

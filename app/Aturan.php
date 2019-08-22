@@ -18,4 +18,9 @@ class Aturan extends Model
     {
       return $this->belongsToMany('App\Char');
     }
+
+    public function histories()
+    {
+      return $this->belongsToMany('App\History', 'history_aturan');
+    }
 }

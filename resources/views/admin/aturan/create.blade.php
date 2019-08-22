@@ -1,6 +1,6 @@
 @extends('admin')
 
-@section('title', "| Users")
+@section('title', "| Create Aturan")
 
 @section('stylesheets')
 
@@ -36,7 +36,7 @@
     {{ Form::select('chars[]', $chars, null, ['class' => 'form-control select2-multi', 'multiple' => 'multiple']) }}
 
 
-             {{ Form::submit('Create Post', array('class' => 'btn btn-success btn-lg btn-block', 'style' => 'margin-top: 20px;')) }}
+             {{ Form::submit('Create Aturan', array('class' => 'btn btn-success btn-lg btn-block', 'style' => 'margin-top: 20px;')) }}
           {!! Form::close() !!}
 
           </div>

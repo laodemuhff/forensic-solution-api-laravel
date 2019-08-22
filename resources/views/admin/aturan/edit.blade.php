@@ -1,6 +1,6 @@
 @extends('admin')
 
-@section('title', '| Edit Blog Aturan')
+@section('title', '| Edit Aturan')
 
 @section('stylesheets')
 

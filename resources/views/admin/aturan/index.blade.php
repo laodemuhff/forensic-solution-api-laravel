@@ -33,7 +33,7 @@
                    <tr>
                       <th>{{ $aturan->id_aturan }}</th>
                       <td>{{ $aturan->nama_aturan }}</td>
-                      <td>{{ $aturan->id_aplikasi }}</td>
+                      <td>{{ $aturan->apps->nama_aplikasi  }}</td>
                       <td>{{ date('M j, Y', strtotime($aturan->created_at)) }}</td>
                       <td><a href="{{ route('aturan.show', $aturan->id_aturan) }}" class="btn btn-primary">View</a>
                         <a href="{{ route('aturan.edit', $aturan->id_aturan) }}" class="btn btn-primary">Edit</a>
