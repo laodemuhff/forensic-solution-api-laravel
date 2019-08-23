@@ -13,4 +13,12 @@ class PagesController extends Controller {
       return view('pages.index');
   }
 
+  public function getStarted() {
+    return view('pages.getstarted');
+}
+
+public function getAbout() {
+  return view('pages.about');
+}
+
 }

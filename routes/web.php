@@ -15,7 +15,9 @@
 Route::group(['middleware' => ['web']], function () {
 
     //Front
-    Route::get('/', 'PagesController@getIndex');
+    Route::get('/', 'PagesController@getIndex')->name('home');
+    Route::get('GetStarted', 'PagesController@getStarted');
+    Route::get('About', 'PagesController@getAbout');
     
     Auth::routes();
     
