@@ -10,6 +10,7 @@ use App\History;
 use App\User;
 use App\Aturan;
 use Session;
+use Auth;
 
 class HistoryController extends Controller
 {
@@ -21,9 +22,20 @@ class HistoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexall()
     {
         $histories = history::all();
+        return view('admin.histories.index')->withHistories($histories);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $histories = history::where('id_user', Auth::user()->id)->get();
         return view('admin.histories.index')->withHistories($histories);
     }
 }

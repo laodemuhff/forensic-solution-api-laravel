@@ -54,7 +54,7 @@
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" href="/admin/histories">
+        <a class="nav-link" href="/admin/allhistories">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Histories</span></a>
       </li>
@@ -66,6 +66,22 @@
         <a class="nav-link" href="/">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Cek Tools</span></a>
+      </li>
+
+      
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <li class="nav-item active">
+        <a class="nav-link" href="/admin/profil">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Profil</span></a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="/admin/histories">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Histories</span></a>
       </li>
       @endif
 
