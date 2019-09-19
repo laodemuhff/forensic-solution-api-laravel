@@ -20,33 +20,42 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Tabel
+        Expert Table
       </div>
 
-      <!-- Nav Item - Aplikasi -->
+      <!-- Nav Item - Functionality -->
       <li class="nav-item active">
-        <a class="nav-link" href="/admin/apps">
+        <a class="nav-link" href="/admin/funcs">
           <i class="fas fa-fw fa-table"></i>
-          <span>Aplikasi</span></a>
+          <span>Functionality</span></a>
       </li>
 
-      <!-- Nav Item - Karakteristik -->
+      <!-- Nav Item - Characteristics -->
       <li class="nav-item active">
         <a class="nav-link" href="/admin/chars">
           <i class="fas fa-fw fa-table"></i>
-          <span>Karakteristik</span></a>
+          <span>Characteristics</span></a>
       </li>
 
-      <!-- Nav Item - Aturan -->
+      <!-- Nav Item - Tool -->
       <li class="nav-item active">
-        <a class="nav-link" href="/admin/aturan">
+        <a class="nav-link" href="/admin/tools">
           <i class="fas fa-fw fa-table"></i>
-          <span>Aturan</span></a>
+          <span>Tool</span></a>
+      </li>
+
+      <!-- Nav Item - Rule -->
+      <li class="nav-item active">
+        <a class="nav-link" href="/admin/rules">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Rule</span></a>
       </li>
       
       <!-- Divider -->
       <hr class="sidebar-divider">
-
+      <div class="sidebar-heading">
+        User Table
+      </div>
       <li class="nav-item active">
         <a class="nav-link" href="/admin/users">
           <i class="fas fa-fw fa-tachometer-alt"></i>

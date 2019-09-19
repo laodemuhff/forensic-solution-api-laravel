@@ -34,11 +34,13 @@ Route::group(['middleware' => ['web']], function () {
    // Users
    Route::resource('admin/users', 'UserController')->middleware('admin');
    // Aplikasi
-   Route::resource('admin/apps', 'AppController', ['except' => ['create']])->middleware('admin');
+   Route::resource('admin/tools', 'AppController')->middleware('admin');
    // Karakteristik
    Route::resource('admin/chars', 'CharController', ['except' => ['create']])->middleware('admin');
+   // Fungsionalitas
+   Route::resource('admin/funcs', 'FungController', ['except' => ['create']])->middleware('admin');
    //Aturan
-   Route::resource('admin/aturan', 'AturanController')->middleware('admin');
+   Route::resource('admin/rules', 'AturanController')->middleware('admin');
    //History
    Route::get('admin/allhistories', 'HistoryController@indexall')->middleware('admin');
 

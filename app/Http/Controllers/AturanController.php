@@ -29,7 +29,7 @@ class AturanController extends Controller
         // create a variable and store all the blog aturan in it from the database
         $aturans = Aturan::all();
         //return a view and pass in the above variable
-        return view('admin.aturan.index')->withAturans($aturans);
+        return view('admin.rules.index')->withAturans($aturans);
     }
 
     /**
@@ -41,13 +41,11 @@ class AturanController extends Controller
     {
       $apps = App::all();
       $chars = Char::all();
-      
-      $chars = Char::all();
       $chars2 = array();
       foreach ($chars as $char) {
-        $chars2[$char->id_karakteristik] = $char->nama_karakteristik;
+        $chars2[$char->id_karakteristik] = $char->jenis_karakteristik.' - '.$char->nama_karakteristik;
       }
-        return view('admin.aturan.create')->withApps($apps)->withChars($chars2);
+        return view('admin.rules.create')->withApps($apps)->withChars($chars2);
     }
 
     /**
@@ -81,9 +79,9 @@ class AturanController extends Controller
 
 
 
-      Session::flash('success', 'The blog aturan was succesfully saved!');
+      Session::flash('success', 'New rule was successfully created!');
 
-      return redirect()->route('aturan.index');
+      return redirect()->route('rules.index');
     }
 
     /**
@@ -95,7 +93,7 @@ class AturanController extends Controller
     public function show($id_aturan)
     {
         $aturan = Aturan::find($id_aturan);
-        return view('admin.aturan.show')->withAturan($aturan);
+        return view('admin.rules.show')->withAturan($aturan);
     }
 
     /**
@@ -120,7 +118,7 @@ class AturanController extends Controller
           $chars2[$char->id_karakteristik] = $char->nama_karakteristik;
         }
         //return the view and pass in the variablie we previously created
-        return view('admin.aturan.edit')->withAturan($aturan)->withApps($cats)->withChars($chars2);
+        return view('admin.rules.edit')->withAturan($aturan)->withApps($cats)->withChars($chars2);
     }
 
     /**
@@ -157,9 +155,9 @@ class AturanController extends Controller
 
 
         // set flash data with success message
-        Session::flash('success', 'This aturan was successfully saved.');
-        // redirect with flash data to aturan.show
-        return redirect()->route('aturan.show', $aturan->id_aturan);
+        Session::flash('success', 'This rule was successfully saved.');
+        // redirect with flash data to rules.show
+        return redirect()->route('rules.show', $aturan->id_aturan);
     }
 
     /**
@@ -175,7 +173,7 @@ class AturanController extends Controller
 
         $aturan->delete();
 
-        Session::flash('success', 'The aturan was successfully deleted.');
-        return redirect()->route('aturan.index');
+        Session::flash('success', 'The rule was successfully deleted.');
+        return redirect()->route('rules.index');
     }
 }

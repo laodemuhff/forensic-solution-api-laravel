@@ -13,4 +13,9 @@ class App extends Model
     {
       return $this->hasMany('App\Aturan');
     }
+
+    public function fungs()
+    {
+      return $this->belongsToMany('App\Fung');
+    }
 }

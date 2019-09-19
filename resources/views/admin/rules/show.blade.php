@@ -1,6 +1,6 @@
 @extends('admin')
 
-@section('title', "| Aturan")
+@section('title', "| $aturan->nama_aturan")
 
 @section('content')
 <div class="container">
@@ -13,16 +13,18 @@
       <div class="col-md-8">
         <h1>{{ $aturan->nama_aturan }}</h1>
         
-            <span>Aplikasi: {{ $aturan->apps->nama_aplikasi }}</span>
         <hr>
 
         <div class="chars">
-          <span>Karakteristik : </span><br/>
+          <span>Characteristics</span><br/>
+          <table>
           @foreach ($aturan->chars as $char)
-            <span class="label label-default">{{ $char->nama_karakteristik }}</span><br/>
+          <tr><td>{{ $char->jenis_karakteristik }}</td><td> : </td><td>{{ $char->nama_karakteristik }}</td></tr>
           @endforeach
+          </table>
       </div>
-
+      <hr>
+      <h4>Tool : {{ $aturan->apps->nama_aplikasi }}</h4>
       </div>
       <div class="col-md-4">
         <div class="well">
@@ -40,10 +42,10 @@
 
           <div class="row">
              <div class="col-sm-6">
-               {!! Html::linkRoute('aturan.edit', 'Edit', array($aturan->id_aturan), array('class' => 'btn btn-primary btn-block')) !!}
+               {!! Html::linkRoute('rules.edit', 'Edit', array($aturan->id_aturan), array('class' => 'btn btn-primary btn-block')) !!}
              </div>
              <div class="col-sm-6">
-                 {!! Form::open(['route' => ['aturan.destroy', $aturan->id_aturan], 'method' => 'DELETE']) !!}
+                 {!! Form::open(['route' => ['rules.destroy', $aturan->id_aturan], 'method' => 'DELETE']) !!}
 
                  {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-block']) !!}
 
@@ -54,7 +56,7 @@
 
            <div class="row">
               <div class="col-md-12">
-                {{ Html::linkRoute('aturan.index', 'See All Aturan', [], ['class' => 'btn btn-default btn-block btn-h1-spacing']) }}
+                {{ Html::linkRoute('rules.index', 'See All Rule', [], ['class' => 'btn btn-default btn-block btn-h1-spacing']) }}
               </div>
            </div>
 

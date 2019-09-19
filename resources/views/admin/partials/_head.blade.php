@@ -15,7 +15,7 @@
   <!-- Custom styles for this page -->
   <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-    <title>Blog @yield('title')</title> <!-- change this title for each page -->
+    <title>Admin @yield('title')</title> <!-- change this title for each page -->
 
 
     @yield('stylesheets')

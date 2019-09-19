@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\App;
+use App\Fung;
 use Session;
 
 class AppController extends Controller
@@ -20,7 +21,7 @@ class AppController extends Controller
     public function index()
     {
         $apps = App::all();
-        return view('admin.apps.index')->withApps($apps);
+        return view('admin.tools.index')->withApps($apps);
     }
 
     /**
@@ -30,7 +31,12 @@ class AppController extends Controller
      */
     public function create()
     {
-        //
+      $fungs = Fung::all();
+      $fungs2 = array();
+      foreach ($fungs as $fung) {
+        $fungs2[$fung->id_fungsionalitas] = $fung->nama_fungsionalitas;
+      }
+        return view('admin.tools.create')->withFungs($fungs2);
     }
 
     /**
@@ -41,15 +47,29 @@ class AppController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, array('nama_aplikasi' => 'required|max:255'));
+          //  validate the data
+          $this->validate($request, array(
+            'nama_aplikasi' => 'required|max:255'
+          ));
+  
+        // store in the database
         $app = new App;
+  
         $app->nama_aplikasi = $request->nama_aplikasi;
         $app->keterangan = $request->keterangan;
+  
         $app->save();
-
-        Session::flash('success', 'New App was successfully created!');
-
-        return redirect()->route('apps.index');
+  
+        
+        if (isset($request->fungs)) {
+          $app->fungs()->sync($request->fungs);
+      }else {
+        $app->fungs()->sync(array());
+      }
+  
+        Session::flash('success', 'New tool was successfully created!');
+  
+        return redirect()->route('tools.index');
     }
 
     /**
@@ -61,7 +81,7 @@ class AppController extends Controller
     public function show($id_aplikasi)
     {
         $app = App::find($id_aplikasi);
-        return view('admin.apps.show')->withApp($app);
+        return view('admin.tools.show')->withApp($app);
     }
 
     /**
@@ -72,8 +92,17 @@ class AppController extends Controller
      */
     public function edit($id_aplikasi)
     {
-        $app = App::find($id_aplikasi);
-        return view('admin.apps.edit')->withApp($app);
+
+         // find the aturan in the database and save that as a variable
+         $app = App::find($id_aplikasi);
+ 
+         $fungs = Fung::all();
+         $fungs2 = array();
+         foreach ($fungs as $fung) {
+           $fungs2[$fung->id_fungsionalitas] = $fung->nama_fungsionalitas;
+         }
+         //return the view and pass in the variablie we previously created
+         return view('admin.tools.edit')->withApp($app)->withFungs($fungs2);
     }
 
     /**
@@ -93,9 +122,17 @@ class AppController extends Controller
         $app->keterangan = $request->keterangan;
         $app->save();
 
-        Session::flash('success', 'Successfully saved your new app!');
+        
+        if (isset($request->fungs)) {
+            $app->fungs()->sync($request->fungs);
+        }else {
+          $app->fungs()->sync(array());
+        }
 
-        return redirect()->route('apps.index', $app->id_aplikasi);
+        // set flash data with success message
+        Session::flash('success', 'This tool was successfully saved.');
+        // redirect with flash data to aturan.show
+        return redirect()->route('tools.show', $app->id_aplikasi);
     }
 
     /**
@@ -107,11 +144,12 @@ class AppController extends Controller
     public function destroy($id_aplikasi)
     {
         $app = App::find($id_aplikasi);
+        $app->fungs()->detach();
 
         $app->delete();
 
-        Session::flash('success', 'App was deleted successfully');
+        Session::flash('success', 'Tool was successfully deleted.');
 
-        return redirect()->route('apps.index');
+        return redirect()->route('tools.index');
     }
 }

@@ -1,6 +1,6 @@
 @extends('admin')
 
-@section('title', "| Aturan")
+@section('title', "| Characteristics")
 
 @section('content')
 <div class="row">
@@ -10,7 +10,7 @@
               <!-- Area Chart -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Karakteristik</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Characteristics</h6>
                 </div>
                 <div class="card-body">
               <div class="table-responsive">
@@ -18,8 +18,8 @@
                   <thead>
                   <tr>
                   <th>#</th>
-                  <th>Nama Karakteristik</th>
-                  <th>Jenis</th>
+                  <th>Name</th>
+                  <th>Category</th>
                   <th>Created_at</th>
                   <th>Updated_at</th>
                   <th>Action</th>
@@ -52,16 +52,16 @@
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Tambah Karakteristik</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Create New Characteristics</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
                 <div class="well">
                 {!! Form::open(['route' => 'chars.store']) !!}
-                {{ Form::label('nama_karakteristik', 'Nama Karakteristik:') }}
+                {{ Form::label('nama_karakteristik', 'Name:') }}
                 {{ Form::text('nama_karakteristik', null, ['class' => 'form-control']) }}
                <br/>
-               {{ Form::label('jenis_karakteristik', 'Jenis:') }}
+               {{ Form::label('jenis_karakteristik', 'Category:') }}
                 {{ Form::text('jenis_karakteristik', null, ['class' => 'form-control']) }}
                <br/>
                 {{ Form::submit('Create New Char', ['class' => 'btn btn-success btn-block btn-h1-spacing']) }}

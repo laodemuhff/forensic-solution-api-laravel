@@ -46,7 +46,7 @@ class CharController extends Controller
         $char->jenis_karakteristik = $request->jenis_karakteristik;
         $char->save();
 
-        Session::flash('success', 'New Char was successfully created!');
+        Session::flash('success', 'New characteristics was successfully created!');
 
         return redirect()->route('chars.index');
     }
@@ -92,7 +92,7 @@ class CharController extends Controller
         $char->jenis_karakteristik = $request->jenis_karakteristik;
         $char->save();
 
-        Session::flash('success', 'Successfully saved your new char!');
+        Session::flash('success', 'This characteristics was successfully saved.');
 
         return redirect()->route('chars.index', $char->id_karakteristik);
     }
@@ -109,7 +109,7 @@ class CharController extends Controller
 
         $char->delete();
 
-        Session::flash('success', 'Char was deleted successfully');
+        Session::flash('success', 'Characteristics was successfully deleted.');
 
         return redirect()->route('chars.index');
     }

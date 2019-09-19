@@ -100,7 +100,7 @@ class UserController extends Controller
         $user->admin = $request->admin;
         $user->save();
 
-        Session::flash('success', 'Successfully saved your new user!');
+        Session::flash('success', 'This user was successfully saved.');
 
         return redirect()->route('users.index');
     }
@@ -117,7 +117,7 @@ class UserController extends Controller
 
         $user->delete();
 
-        Session::flash('success', 'User was deleted successfully');
+        Session::flash('success', 'User was successfully deleted.');
 
         return redirect()->route('users.index');
     }

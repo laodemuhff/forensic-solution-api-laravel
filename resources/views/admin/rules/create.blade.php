@@ -1,6 +1,6 @@
 @extends('admin')
 
-@section('title', "| Create Aturan")
+@section('title', "| Create New Rule")
 
 @section('stylesheets')
 
@@ -15,15 +15,15 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Create Aturan</div>
+                <div class="card-header">Create Rule</div>
 
                 <div class="card-body">
 
-          {!! Form::open(array('route' => 'aturan.store', 'data-parsley-validate' => '', 'files' => true)) !!}
-             {{ Form::label('nama_aturan', 'Nama :') }}
+          {!! Form::open(array('route' => 'rules.store', 'data-parsley-validate' => '', 'files' => true)) !!}
+             {{ Form::label('nama_aturan', 'Name :') }}
              {{ Form::text('nama_aturan', null, array('class' => 'form-control', 'required' => '', 'maxlength'=> '255')) }}
 
-             {{ Form::label('id_aplikasi', 'Aplikasi :') }}
+             {{ Form::label('id_aplikasi', 'Tool :') }}
              <select class='form-control' name='id_aplikasi'>
                @foreach($apps as $app)
                 <option value='{{ $app->id_aplikasi }}'>{{ $app->nama_aplikasi }}</option>
@@ -32,11 +32,11 @@
              </select>
 
 
-             {{ Form::label('chars', 'Karakteristik:', ['class' => 'form-spacing-top']) }}
+             {{ Form::label('chars', 'Characteristics:', ['class' => 'form-spacing-top']) }}
     {{ Form::select('chars[]', $chars, null, ['class' => 'form-control select2-multi', 'multiple' => 'multiple']) }}
 
 
-             {{ Form::submit('Create Aturan', array('class' => 'btn btn-success btn-lg btn-block', 'style' => 'margin-top: 20px;')) }}
+             {{ Form::submit('Create New Rule', array('class' => 'btn btn-success btn-lg btn-block', 'style' => 'margin-top: 20px;')) }}
           {!! Form::close() !!}
 
           </div>
