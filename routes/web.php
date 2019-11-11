@@ -50,5 +50,10 @@ Route::group(['middleware' => ['web']], function () {
    
    //History
    Route::resource('admin/histories', 'HistoryController');
+
+   
+   //CheckTools
+   Route::get('admin/checktools', 'CheckController@index');
+   Route::post('admin/checktools/next', 'CheckController@next')->name('next');
     
   });
