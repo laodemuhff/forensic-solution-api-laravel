@@ -18,8 +18,26 @@
                @foreach($fungs as $check)
                 <option value='{{ $check->id_fungsionalitas }}'>{{ $check->nama_fungsionalitas }}</option>
                @endforeach
-
              </select>
+<br/>
+<h2>Pilih Karakteristik</h2>
+             
+             <?php
+                    $asdd = DB::table('chars')->distinct()->pluck('jenis_karakteristik')->toArray();
+                    foreach ($asdd as $dsaa) {
+                        echo $dsaa . " :";
+                        echo "<br/>";
+                        $ab12 = DB::table('chars')->where('jenis_karakteristik', $dsaa)->get()->pluck('nama_karakteristik', 'id_karakteristik')->toArray();
+                        ?>
+                        <select class='form-control' name='karakteristik[]'>
+                            <?php foreach ($ab12 as $key => $ab21) { ?>
+                                <option value='<?php echo $key ?>'><?php echo $ab21 ?></option>
+                            <?php } ?>
+
+                        </select>
+                    <?php
+                    }
+                    ?>
 
              {{ Form::submit('Next', array('class' => 'btn btn-success btn-lg btn-block', 'style' => 'margin-top: 20px;')) }}
           {!! Form::close() !!}
