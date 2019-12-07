@@ -20,6 +20,7 @@
                      @endif</p>
                   <p>Akun dibuat : {{ $profils->created_at }}</p>
                   <a href="{{ route('profil.edit', $profils->id) }}" class="btn btn-primary">Edit</a>
+                  <a href="{{ route('formpassword', $profils->id) }}" class="btn btn-primary">Change Password</a>
           </div>
             </div>
         </div>

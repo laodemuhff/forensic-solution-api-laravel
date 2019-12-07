@@ -12,32 +12,46 @@
                 </div>
                 <div class="card-body">
                     <?php
+
+                    print_r($idfungsionalitas);
+                    echo "id = fungsionalitas<br/>";
                     $idaplikasi = DB::table('app_fung')->where('fung_id_fungsionalitas', $idfungsionalitas)->get()->pluck('app_id_aplikasi');
+                    echo "id aplikasi yg ada di fungsionalitas<pre>";
+                    print_r($idaplikasi);
+                    echo "</pre>";
                     foreach ($idaplikasi as $iapp) {
                         $idaturan = DB::table('aturan')->where('id_aplikasi', $iapp)->get()->pluck('id_aturan');
                         $idaturanall[] = $idaturan->all();
                     }
+                    echo "id aturan yg dimiliki aplikasi <pre>";
+                    print_r($idaturanall);
+                    echo "</pre>";
                     foreach ($idaturanall as $row => $innerArray){
                         foreach($innerArray as $innerRow => $value){     
                             $idaturanchar = DB::table('aturan_char')->where('aturan_id_aturan', $value)->get()->pluck('char_id_karakteristik');
+                            print_r($idaturanchar);
+                            echo $value . "<br/>";
                             $idaturancharall[] = $idaturanchar->all();
                             $valueall[] = $value;
                         }
                     }
 
-                    $k = false;
-
                     for ($i = 0; $i < count($idaturancharall); $i++) {
                         $kar = ($idaturancharall[$i] == $arrayinput);
 
+
                         if ($kar) {
-                            $k = true;
+                            //echo 'id = ' . $arr[$i];
+                            print_r($idaturancharall[$i]);
+                            print_r($arrayinput);
+                            echo "<br/> ketemu aturan : " . $valueall[$i];
                             $resultnamaaturan = DB::table('aturan')->where('id_aturan', $valueall[$i])->value('nama_aturan');
                             $resultidchar = DB::table('aturan_char')->where('aturan_id_aturan', $valueall[$i])->get()->pluck('char_id_karakteristik');
                             $resultidaplikasi = DB::table('aturan')->where('id_aturan', $valueall[$i])->value('id_aplikasi');
                             $resultnamaaplikasi = DB::table('apps')->where('id_aplikasi', $resultidaplikasi)->value('nama_aplikasi');
                             $resultketaplikasi = DB::table('apps')->where('id_aplikasi', $resultidaplikasi)->value('keterangan');
                             $resultidfung = DB::table('app_fung')->where('app_id_aplikasi', $resultidaplikasi)->get()->pluck('fung_id_fungsionalitas');
+                            echo "Result : " . $resultnamaaturan . "<br/><br/>";
                             echo "<h2>" . $resultnamaaplikasi . "</h2>";
                             echo "<p>" . $resultketaplikasi . "</p>";
                             echo "<div class='row'>
@@ -57,26 +71,8 @@
                                 $resultnamafungsionalitas = DB::table('fungs')->where('id_fungsionalitas', $rf)->value('nama_fungsionalitas');
                                 echo "<li class='list-group-item'>" . $resultnamafungsionalitas . "</li>";
                             }
-                            echo "</ul></div></div></div>";?>
-                            <form method='POST' action="/admin/checktools/save">
-                            @csrf
-                            <?php 
-                            echo "
-                            <input type='hidden' id='id_user' name='id_user' value='" . $iduser . "'>
-                            <input type='hidden' id='id_aturan' name='id_aturan' value='" . $valueall[$i] . "'>
-    
-                            <div class='form-group row mb-0'>
-                                <div class='col-md-6'>
-                                    <button type='submit' class='btn btn-primary'>
-                                    Save to History
-                                    </button>
-                                </div>
-                            </div>
-                        </form><br/>";
+                            echo "</ul></div></div></div>";
                         }
-                    }
-                    if($k === false){
-                        echo "Data tidak ditemukan!";
                     }
 
                     ?>

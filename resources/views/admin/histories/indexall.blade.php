@@ -16,10 +16,10 @@
             <thead>
                <tr>
                   <th>#</th>
+                  <th>User</th>
                   <th>Aturan</th>
                   <th>Created_at</th>
                   <th>Updated_at</th>
-                  <th></th>
                </tr>
             </thead>
 
@@ -27,10 +27,10 @@
               @foreach ($histories as $history)
                <tr>
                   <th>{{ $history->id }}</th>
+                  <td>{{ $history->id_user }}</td>
                   <td>{{ $history->id_aturan }}</td>
                   <td>{{ $history->created_at }}</td>
                   <td>{{ $history->updated_at }}</td>
-                  <td><a href="{{ route('history.show', $history->id_aturan) }}" class="btn btn-primary">View</a></td>
                </tr>
                @endforeach
             </tbody>

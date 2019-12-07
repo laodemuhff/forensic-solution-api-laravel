@@ -11,6 +11,7 @@ use App\User;
 use App\Aturan;
 use Session;
 use Auth;
+use Illuminate\Support\Facades\DB;
 
 class HistoryController extends Controller
 {
@@ -25,7 +26,7 @@ class HistoryController extends Controller
     public function indexall()
     {
         $histories = history::all();
-        return view('admin.histories.index')->withHistories($histories);
+        return view('admin.histories.indexall')->withHistories($histories);
     }
 
     /**
@@ -35,7 +36,36 @@ class HistoryController extends Controller
      */
     public function index()
     {
-        $histories = history::where('id_user', Auth::user()->id)->get();
+        $id_user = Auth::user()->id;
+        $histories = DB::table('history')
+        ->select('*')
+        ->where('id_user', $id_user)
+        ->get();
         return view('admin.histories.index')->withHistories($histories);
+    }
+
+    public function store(Request $request)
+    {
+        $history = new history;
+        $history->id_user = $request->id_user;
+        $history->id_aturan = $request->id_aturan;
+        $history->save();
+
+        Session::flash('success', 'New History was successfully created!');
+
+        return redirect()->route('history');
+    }
+
+    
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id_aturan)
+    {
+        $idaturan = $id_aturan;
+        return view('admin.histories.show')->withIdaturan($idaturan);
     }
 }

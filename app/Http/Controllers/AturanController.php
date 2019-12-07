@@ -115,7 +115,7 @@ class AturanController extends Controller
         $chars = Char::all();
         $chars2 = array();
         foreach ($chars as $char) {
-          $chars2[$char->id_karakteristik] = $char->nama_karakteristik;
+          $chars2[$char->id_karakteristik] = $char->jenis_karakteristik.' - '.$char->nama_karakteristik;
         }
         //return the view and pass in the variablie we previously created
         return view('admin.rules.edit')->withAturan($aturan)->withApps($cats)->withChars($chars2);

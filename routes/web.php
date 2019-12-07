@@ -48,12 +48,20 @@ Route::group(['middleware' => ['web']], function () {
    //Profil
    Route::resource('admin/profil', 'ProfilController');
    
+  Route::get('admin/profil/{id}/changepassword','ProfilController@showChangePasswordForm')->name('formpassword');
+  Route::post('admin/profil/savepassword','ProfilController@changePassword')->name('savepassword');
+   
    //History
-   Route::resource('admin/histories', 'HistoryController');
+   Route::get('admin/histories', 'HistoryController@index')->name('history');
+   Route::get('admin/histories/{id}', 'HistoryController@show')->name('history.show');
 
    
    //CheckTools
    Route::get('admin/checktools', 'CheckController@index');
    Route::post('admin/checktools/next', 'CheckController@next')->name('next');
+   
+   Route::post('admin/checktools/save', 'HistoryController@store');
+
+   
     
   });
