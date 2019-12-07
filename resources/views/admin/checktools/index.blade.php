@@ -13,14 +13,14 @@
                 <div class="card-body">
                     {!! Form::open(array('route' => 'next')) !!}
 
-                    {{ Form::label('id_fungsionalitas', 'Pilih Fungsionalitas :') }}
+                    <h2>Functionality</h2>
              <select class='form-control' name='id_fungsionalitas'>
                @foreach($fungs as $check)
                 <option value='{{ $check->id_fungsionalitas }}'>{{ $check->nama_fungsionalitas }}</option>
                @endforeach
              </select>
 <br/>
-<h2>Pilih Karakteristik</h2>
+<h2>Characteristics</h2>
              
              <?php
                     $asdd = DB::table('chars')->distinct()->pluck('jenis_karakteristik')->toArray();

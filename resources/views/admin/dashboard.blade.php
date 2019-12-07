@@ -19,8 +19,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    @if (Auth::user()->admin == 1)
                     {{Auth::user()->name}}, Anda login sebagai Admin.
+                    @else
+                    {{Auth::user()->name}}, Anda login sebagai User.
+                    @endif
                 </div>
             </div>
         </div>

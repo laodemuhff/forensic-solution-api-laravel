@@ -16,7 +16,7 @@
             <thead>
                <tr>
                   <th>#</th>
-                  <th>Aturan</th>
+                  <th>Rule</th>
                   <th>Created_at</th>
                   <th>Updated_at</th>
                   <th></th>

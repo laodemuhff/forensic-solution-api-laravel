@@ -42,7 +42,7 @@
                             echo "<p>" . $resultketaplikasi . "</p>";
                             echo "<div class='row'>
                             <div class='col-sm'><div class='card'><div class='card-header'>
-                            Karakteristik
+                            Characteristics
                           </div> <ul class='list-group list-group-flush'>";
                             foreach ($resultidchar as $rc) {
                                 $resultjeniskarakteristik = DB::table('chars')->where('id_karakteristik', $rc)->value('jenis_karakteristik');
@@ -51,13 +51,13 @@
                             }
                             echo "</ul></div></div>
                             <div class='col-sm'><div class='card'><div class='card-header'>
-                            Fungsionalitas
+                            Functionality
                           </div> <ul class='list-group list-group-flush'>";
                             foreach ($resultidfung as $rf) {
                                 $resultnamafungsionalitas = DB::table('fungs')->where('id_fungsionalitas', $rf)->value('nama_fungsionalitas');
                                 echo "<li class='list-group-item'>" . $resultnamafungsionalitas . "</li>";
                             }
-                            echo "</ul></div></div></div>";?>
+                            echo "</ul></div></div></div><br/>";?>
                             <form method='POST' action="/admin/checktools/save">
                             @csrf
                             <?php 

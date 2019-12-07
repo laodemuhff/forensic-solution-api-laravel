@@ -4,9 +4,16 @@
 
 @section('stylesheets')
 
-   {!! Html::style('/css/pasrsely.css') !!}
+{!! Html::style('/css/pasrsely.css') !!}
    {!! Html::style('/css/select2.min.css') !!}
    <script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=e4987wwmb9ccykezz0n4p6wrzzr8232te3am1osnsxlzr31b"></script>
+
+   <script>
+      tinymce.init({
+        selector: 'textarea',
+        plugins: 'link code textcolor colorpicker image image imagetools media spellchecker'
+      });
+   </script>
 
 @endsection
 
@@ -23,7 +30,7 @@
              {{ Form::label('nama_aplikasi', 'Name :') }}
              {{ Form::text('nama_aplikasi', null, array('class' => 'form-control', 'required' => '', 'maxlength'=> '255')) }}
              {{ Form::label('keterangan', 'Information :') }}
-             {{ Form::text('keterangan', null, array('class' => 'form-control')) }}
+             {{ Form::textarea('keterangan', null, array('class' => 'form-control')) }}
 
              {{ Form::label('fungs', 'Functionality:', ['class' => 'form-spacing-top']) }}
     {{ Form::select('fungs[]', $fungs, null, ['class' => 'form-control select2-multi', 'multiple' => 'multiple']) }}

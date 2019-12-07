@@ -17,7 +17,7 @@
                <tr>
                   <th>#</th>
                   <th>User</th>
-                  <th>Aturan</th>
+                  <th>Rule</th>
                   <th>Created_at</th>
                   <th>Updated_at</th>
                </tr>

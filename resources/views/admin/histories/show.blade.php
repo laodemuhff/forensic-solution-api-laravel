@@ -20,10 +20,10 @@
                             $resultketaplikasi = DB::table('apps')->where('id_aplikasi', $resultidaplikasi)->value('keterangan');
                             $resultidfung = DB::table('app_fung')->where('app_id_aplikasi', $resultidaplikasi)->get()->pluck('fung_id_fungsionalitas');
                             echo "<h2>" . $resultnamaaplikasi . "</h2>";
-                            echo "<p>" . $resultketaplikasi . "</p>";
+                            echo $resultketaplikasi;
                             echo "<div class='row'>
                             <div class='col-sm'><div class='card'><div class='card-header'>
-                            Karakteristik
+                            Characteristics
                           </div> <ul class='list-group list-group-flush'>";
                             foreach ($resultidchar as $rc) {
                                 $resultjeniskarakteristik = DB::table('chars')->where('id_karakteristik', $rc)->value('jenis_karakteristik');
@@ -32,7 +32,7 @@
                             }
                             echo "</ul></div></div>
                             <div class='col-sm'><div class='card'><div class='card-header'>
-                            Fungsionalitas
+                            Functionality
                           </div> <ul class='list-group list-group-flush'>";
                             foreach ($resultidfung as $rf) {
                                 $resultnamafungsionalitas = DB::table('fungs')->where('id_fungsionalitas', $rf)->value('nama_fungsionalitas');

@@ -24,7 +24,9 @@
 
       <hr>
       <span>Information : </span><br/>
-      <span>{{ $app->keterangan }}</span>
+      <?php 
+      echo $app->keterangan; 
+      ?>
 
       </div>
       <div class="col-md-4">
