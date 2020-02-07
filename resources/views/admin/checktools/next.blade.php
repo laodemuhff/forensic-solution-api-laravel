@@ -70,13 +70,20 @@
                                     <button type='submit' class='btn btn-primary'>
                                     Save to History
                                     </button>
+                                    <a href='/admin/checktools' class='btn btn-primary'>
+                                        Back
+                                        </a>
                                 </div>
                             </div>
                         </form><br/>";
                         }
                     }
                     if($k === false){
-                        echo "Data tidak ditemukan!";
+                        echo "Data tidak ditemukan!
+                        <br/>
+                        <a href='/admin/checktools' class='btn btn-primary'>
+                                    Back
+                                    </a>";
                     }
 
                     ?>
