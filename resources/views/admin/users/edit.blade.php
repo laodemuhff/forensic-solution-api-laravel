@@ -18,8 +18,8 @@
        {{ Form::label('email', "Email :") }}
        {{ Form::text('email', null, ['class' => 'form-control']) }}
 
-       {{ Form::label('admin', "Admin :") }}
-       {{ Form::text('admin', null, ['class' => 'form-control']) }}
+       {{ Form::label('admin', "Role :") }}
+       {{ Form::select('admin', $admins, null, ['class' => 'form-control']) }}
 
        {{ Form::submit('Save Changes', ['class' => 'btn btn-success', 'style' => 'margin-top:20px;']) }}
 

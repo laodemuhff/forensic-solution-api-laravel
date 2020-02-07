@@ -46,11 +46,13 @@ class UserController extends Controller
     {
         $this->validate($request, array('name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        'password' => ['required', 'string', 'min:8', 'confirmed'],));
+        'password' => ['required', 'string', 'min:8', 'confirmed'],
+        'admin' => ['required'],));
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->admin = $request->admin;
         $user->save();
 
         Session::flash('success', 'New User was successfully created!');
@@ -79,7 +81,16 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('admin.users.edit')->withUser($user);
+        $admins = User::all();
+        $admins2 = array();
+        foreach ($admins as $admin) {
+            if( $admin->admin == 0){
+                $admins2[$admin->admin] = 'investigator';
+            } else{
+                $admins2[$admin->admin] = 'administrator';
+            }
+        }
+        return view('admin.users.edit')->withUser($user)->withAdmins($admins2);
     }
 
     /**
