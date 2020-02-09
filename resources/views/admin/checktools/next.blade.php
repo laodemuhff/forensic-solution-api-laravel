@@ -26,9 +26,11 @@
                     }
 
                     $k = false;
+                    $arrayfilter = array_filter($arrayinput);
+                    $arrayreindex = array_values($arrayfilter);
 
                     for ($i = 0; $i < count($idaturancharall); $i++) {
-                        $kar = ($idaturancharall[$i] == $arrayinput);
+                        $kar = ($idaturancharall[$i] == $arrayreindex);
 
                         if ($kar) {
                             $k = true;

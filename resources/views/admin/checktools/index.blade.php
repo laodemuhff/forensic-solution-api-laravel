@@ -42,6 +42,8 @@
 
                         <div class="col">
                             <select class='form-control' name='karakteristik[]'>
+                                    
+                            <option value='0'>Not Selected</option>
                                 <?php foreach ($range as $key => $ran) { ?>
                                     <option value='<?php echo $key ?>'><?php echo $ran ?></option>
                                 <?php } ?>
