@@ -29,6 +29,23 @@
                     $arrayfilter = array_filter($arrayinput);
                     $arrayreindex = array_values($arrayfilter);
 
+                    $namafungsionalitas = DB::table('fungs')->where('id_fungsionalitas', $idfungsionalitas)->value('nama_fungsionalitas');
+                    echo "<div class='card'>
+                    <ul class='list-group list-group-flush'>
+                      <li class='list-group-item'> Functionality : " . $namafungsionalitas . "</li>";
+                    echo "<li class='list-group-item'> Characteristic : </br> <ul>";
+                    foreach($arrayreindex as $ray => $value){     
+                        $namachar = DB::table('chars')->where('id_karakteristik', $value)->value('nama_karakteristik');
+                        $jenischar = DB::table('chars')->where('id_karakteristik', $value)->value('jenis_karakteristik');
+                        echo "<li>" . $jenischar . " " . $namachar . "</li>";
+                    }
+                    echo "</ul></li>
+                    </ul>
+                  </div><br/>
+                  <a href='javascript:history.back()' class='btn btn-primary'>
+                              Back
+                              </a><br/><br/>";
+
                     for ($i = 0; $i < count($idaturancharall); $i++) {
                         $kar = ($idaturancharall[$i] == $arrayreindex);
 
@@ -72,20 +89,13 @@
                                     <button type='submit' class='btn btn-primary'>
                                     Save to History
                                     </button>
-                                    <a href='/admin/checktools' class='btn btn-primary'>
-                                        Back
-                                        </a>
                                 </div>
                             </div>
                         </form><br/>";
                         }
                     }
                     if($k === false){
-                        echo "Data tidak ditemukan!
-                        <br/>
-                        <a href='/admin/checktools' class='btn btn-primary'>
-                                    Back
-                                    </a>";
+                        echo "Data tidak ditemukan!";
                     }
 
                     ?>
