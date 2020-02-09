@@ -19,7 +19,6 @@
                   <th>User</th>
                   <th>Rule</th>
                   <th>Created_at</th>
-                  <th>Updated_at</th>
                </tr>
             </thead>
 
@@ -30,7 +29,6 @@
                   <td>{{ $history->id_user }}</td>
                   <td>{{ $history->id_aturan }}</td>
                   <td>{{ $history->created_at }}</td>
-                  <td>{{ $history->updated_at }}</td>
                </tr>
                @endforeach
             </tbody>
