@@ -8,9 +8,10 @@ use Session;
 
 class CharController extends Controller
 {
-  public function __construct(){
-    $this->middleware('auth');
-  }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -86,7 +87,7 @@ class CharController extends Controller
     {
         $char = Char::find($id_karakteristik);
 
-        $this->validate($request, ['nama_karakteristik' => 'required|max:255','jenis_karakteristik' => 'required|max:255']);
+        $this->validate($request, ['nama_karakteristik' => 'required|max:255', 'jenis_karakteristik' => 'required|max:255']);
 
         $char->nama_karakteristik = $request->nama_karakteristik;
         $char->jenis_karakteristik = $request->jenis_karakteristik;
@@ -107,9 +108,14 @@ class CharController extends Controller
     {
         $char = Char::find($id_karakteristik);
 
-        $char->delete();
-
-        Session::flash('success', 'Characteristics was successfully deleted.');
+        try {
+            $char->delete();
+            Session::flash('success', 'Characteristics was successfully deleted.');
+        } catch (\Exception $e) {
+            if ($e->getCode() == "23000") {
+                Session::flash('danger', 'Characteristics used in Rule');
+            }
+        }
 
         return redirect()->route('chars.index');
     }

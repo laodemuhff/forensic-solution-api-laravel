@@ -11,6 +11,7 @@ use App\Char;
 use App\Aturan;
 use App\App;
 use DB;
+use Auth;
 use Session;
 use Storage;
 
@@ -42,12 +43,11 @@ class CheckController extends Controller
 	 */
 	public function next(Request $request)
 	{
-		$id_fungsionalitas = $request->id_fungsionalitas;
-		$app_fung = DB::table('app_fung')->where('fung_id_fungsionalitas', $id_fungsionalitas)->get()->pluck('app_id_aplikasi');
-		$aturans = Aturan::find($app_fung);
+		$idfungsionalitas = $request->id_fungsionalitas;
 		$arrayinput = $request->karakteristik;
+		$iduser = Auth::user()->id;
 
-		return view('admin.checktools.next')->withAturans($aturans)->withArrayinput($arrayinput);
+		return view('admin.checktools.next')->withIdfungsionalitas($idfungsionalitas)->withArrayinput($arrayinput)->withIduser($iduser);
 	}
 
 }

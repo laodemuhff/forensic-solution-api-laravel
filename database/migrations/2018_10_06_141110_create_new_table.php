@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFungsionalitasTable extends Migration
+class CreateNewTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateFungsionalitasTable extends Migration
      */
     public function up()
     {
-        Schema::create('fungs', function (Blueprint $table) {
-            $table->string('id_fungs')->increments();
-            $table->string('nama_fungs');
-            $table->string('id_aturan');
+        Schema::create('new', function (Blueprint $table) {
+            $table->Increments('id');
+            $table->string('id_user');
+            $table->string('karakteristik');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateFungsionalitasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fungs');
+        Schema::dropIfExists('new');
     }
 }

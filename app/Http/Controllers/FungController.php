@@ -8,9 +8,10 @@ use Session;
 
 class FungController extends Controller
 {
-  public function __construct(){
-    $this->middleware('auth');
-  }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -104,11 +105,14 @@ class FungController extends Controller
     public function destroy($id_fungsionalitas)
     {
         $fung = Fung::find($id_fungsionalitas);
-
-        $fung->delete();
-
-        Session::flash('success', 'Functionality was successfully deleted.');
-
+        try {
+            $fung->delete();
+            Session::flash('success', 'Functionality was successfully deleted.');
+        } catch (\Exception $e) {
+            if ($e->getCode() == "23000") {
+                Session::flash('danger', 'Functionality used in Tool');
+            }
+        }
         return redirect()->route('funcs.index');
     }
 }

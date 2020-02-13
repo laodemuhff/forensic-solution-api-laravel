@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKarakteristikTable extends Migration
+class CreateFungsionalitasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateKarakteristikTable extends Migration
      */
     public function up()
     {
-        Schema::create('karakteristik', function (Blueprint $table) {
-            $table->string('kode_karakteristik')->increments();
-            $table->string('nama_karakteristik');
+        Schema::create('fungs', function (Blueprint $table) {
+            $table->string('id_fungs')->increments();
+            $table->string('nama_fungs');
+            $table->string('id_aturan');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateKarakteristikTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('karakteristik');
+        Schema::dropIfExists('fungs');
     }
 }

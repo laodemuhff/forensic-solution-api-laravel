@@ -43,6 +43,8 @@ Route::group(['middleware' => ['web']], function () {
    Route::resource('admin/rules', 'AturanController')->middleware('admin');
    //History
    Route::get('admin/allhistories', 'HistoryController@indexall')->middleware('admin');
+   //New
+   Route::get('admin/new', 'NewsController@index')->middleware('admin');
 
    
    //Profil

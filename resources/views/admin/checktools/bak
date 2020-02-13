@@ -1,52 +1,5 @@
-   {!! Form::open(array('route' => 'result', 'data-parsley-validate' => '', 'files' => true)) !!}
-
-
-                    <?php
-                    $asdd = DB::table('chars')->distinct()->pluck('jenis_karakteristik')->toArray();
-                    foreach ($asdd as $dsaa) {
-                        echo $dsaa . " :";
-                        echo "<br/>";
-                        $ab12 = DB::table('chars')->where('jenis_karakteristik', $dsaa)->get()->pluck('nama_karakteristik', 'id_karakteristik')->toArray();
-                        ?>
-                        <select class='form-control' name='karakteristik'>
-                            <?php foreach ($ab12 as $key => $ab21) { ?>
-                                <option value='<?php echo $key ?>'><?php echo $ab21 ?></option>
-                            <?php } ?>
-
-                        </select>
-                    <?php
-                    }
-                    ?>
-
-
-                    {{ Form::submit('Next', array('class' => 'btn btn-success btn-lg btn-block', 'style' => 'margin-top: 20px;')) }}
-                    {!! Form::close() !!}
-
-
-                    <?php
-
-                    foreach ($aturans as $a) {
-                        $arr[] = $a->id_aturan;
-                    }
-                    foreach ($arr as $ar) {
-                        $ab = DB::table('aturan_char')->where('aturan_id_aturan', $ar)->get()->pluck('char_id_karakteristik');
-
-                        $ac[] = $ab->all();
-                    }
-
-                    echo "<pre>";
-                    print_r($ac);
-                    echo "</pre>";
-                    echo "Sedang, Sedang, Rendah, Tinggi, Rendah, Rendah </br>";
-
-                    $arrayinput = array('2', '5', '7', '12', '13', '16');
-
-                    for ($i = 0; $i < count($ac); $i++) {
-                        $kar = ($ac[$i] == $arrayinput);
-                        if ($kar) {
-                            echo 'id = ' . $arr[$i];
-                            $abxx = DB::table('aturan')->where('id_aturan', $arr[$i])->get()->pluck('nama_aturan');
-                            echo $abxx;
-                        }
-                    }
-                    ?>
+auto save history -> data ditemukan
+auto save fakta baru -> data tidak ditemukan
+karakteristik -> tinggi rendah disesuaikan
+buat pengujian kepakar -> sreenshot
+pengujian ke user -> kuisioner
