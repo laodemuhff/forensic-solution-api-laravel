@@ -35,6 +35,24 @@
                 <td>{{ $char->updated_at }}</td>
                 <td style="display: inline-flex;width: 150px;"><a href="{{ route('chars.edit', $char->id_karakteristik) }}" class="btn btn-primary">Edit</a>
                   <button class="btn btn-danger" data-toggle="modal" data-target="#modal-delete-{{ $char->id_karakteristik }}">Delete</button>
+                  <div class="modal fade" id="modal-delete-{{ $char->id_karakteristik }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete?</h5>
+                          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                          {{ Form::open(['route' => ['chars.destroy', $char->id_karakteristik], 'method' => 'DELETE']) }}
+                          {{ Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                          {{ Form::close() }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </td>
               </tr>
               @endforeach
@@ -65,25 +83,6 @@
           {{ Form::submit('Create New Char', ['class' => 'btn btn-success btn-block btn-h1-spacing']) }}
           {!! Form::close() !!}
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="modal-delete-{{ $char->id_karakteristik }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete?</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        {{ Form::open(['route' => ['chars.destroy', $char->id_karakteristik], 'method' => 'DELETE']) }}
-        {{ Form::submit('Delete', ['class' => 'btn btn-danger'])}}
-        {{ Form::close() }}
       </div>
     </div>
   </div>

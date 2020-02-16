@@ -68,4 +68,21 @@ class HistoryController extends Controller
         $idaturan = $id_aturan;
         return view('admin.histories.show')->withIdaturan($idaturan);
     }
+    
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $history = history::find($id);
+
+        $history->delete();
+
+        Session::flash('success', 'History was successfully deleted.');
+
+        return redirect()->route('histories.index');
+    }
 }

@@ -108,8 +108,14 @@
                                 @foreach ($histories as $history)
                                 <tr>
                                     <th>{{ $history->id }}</th>
-                                    <td>{{ $history->id_user }}</td>
-                                    <td>{{ $history->id_aturan }}</td>
+                                    <?php
+                                    $namauser = DB::table('users')->where('id', $history->id_user)->value('name');
+                                    ?>
+                                    <td>{{ $namauser }}</td>
+                                    <?php
+                                    $namaaturan = DB::table('aturan')->where('id_aturan', $history->id_aturan)->value('nama_aturan');
+                                    ?>
+                                    <td>{{ $namaaturan }}</td>
                                     <td>{{ $history->created_at }}</td>
                                 </tr>
                                 @endforeach
@@ -132,12 +138,12 @@
                 </div>
             </div>
         </div>
-    </div><br/>
+    </div><br />
     <div class="row">
         <div class="col">
             <div class="card text-center">
                 <div class="card-body text-center">
-                <h2 class="card-title text-primary">Alur Proses Sistem</h2>
+                    <h2 class="card-title text-primary">Alur Proses Sistem</h2>
                     <div class="row no-gutters align-items-center text-center">
                         <div class="col-md-2 bg-primary text-white shadow p-2 rounded">
                             <div class="mb-1 text-center">Memilih Fungsionalitas dan Karakteristik</div>

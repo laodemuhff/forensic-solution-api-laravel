@@ -44,7 +44,7 @@ Route::group(['middleware' => ['web']], function () {
    //History
    Route::get('admin/allhistories', 'HistoryController@indexall')->middleware('admin');
    //New
-   Route::get('admin/new', 'NewsController@index')->middleware('admin');
+   Route::resource('admin/new', 'NewsController', ['only' => ['index', 'destroy']])->middleware('admin');
 
    
    //Profil
@@ -54,8 +54,9 @@ Route::group(['middleware' => ['web']], function () {
   Route::post('admin/profil/savepassword','ProfilController@changePassword')->name('savepassword');
    
    //History
-   Route::get('admin/histories', 'HistoryController@index')->name('history');
-   Route::get('admin/histories/{id}', 'HistoryController@show')->name('history.show');
+   Route::resource('admin/histories', 'HistoryController', ['only' => ['index', 'show', 'destroy']]);
+   //Route::get('admin/histories', 'HistoryController@index')->name('history');
+   //Route::get('admin/histories/{id}', 'HistoryController@show')->name('history.show');
 
    
    //CheckTools

@@ -29,4 +29,20 @@ class NewsController extends Controller
         return view('admin.new.index')->withNews($news);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $news = news::find($id);
+
+        $news->delete();
+
+        Session::flash('success', 'Successfully deleted.');
+
+        return redirect()->route('new.index');
+    }
 }

@@ -26,8 +26,14 @@
               @foreach ($histories as $history)
                <tr>
                   <th>{{ $history->id }}</th>
-                  <td>{{ $history->id_user }}</td>
-                  <td>{{ $history->id_aturan }}</td>
+                  <?php
+                    $namauser = DB::table('users')->where('id', $history->id_user)->value('name');
+                  ?>
+                  <td>{{ $namauser }}</td>
+                  <?php
+                    $namaaturan = DB::table('aturan')->where('id_aturan', $history->id_aturan)->value('nama_aturan');
+                  ?>
+                  <td>{{ $namaaturan }}</td>
                   <td>{{ $history->created_at }}</td>
                </tr>
                @endforeach

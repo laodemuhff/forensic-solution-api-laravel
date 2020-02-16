@@ -46,6 +46,24 @@
                   </td>
                   <td style="display: inline-flex;width: 150px;"><a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">Edit</a>
                     <button class="btn btn-danger" data-toggle="modal" data-target="#modal-delete-{{ $user->id }}">Delete</button>
+                    <div class="modal fade" id="modal-delete-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete?</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                          </div>
+                          <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            {{ Form::open(['route' => ['users.destroy', $user->id], 'method' => 'DELETE']) }}
+                            {{ Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                            {{ Form::close() }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 @endforeach
@@ -53,24 +71,6 @@
             </table>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="modal-delete-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete?</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        {{ Form::open(['route' => ['users.destroy', $user->id], 'method' => 'DELETE']) }}
-        {{ Form::submit('Delete', ['class' => 'btn btn-danger'])}}
-        {{ Form::close() }}
       </div>
     </div>
   </div>
