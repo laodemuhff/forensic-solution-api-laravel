@@ -3,7 +3,7 @@ a{
 }
 
 body{
-  background: url("/images/intro-bg.svg") right no-repeat;
+  background: url("/images/intro-bg.svg") top right no-repeat;
 }
 
 a:hover {

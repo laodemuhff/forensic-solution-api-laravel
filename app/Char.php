@@ -13,4 +13,8 @@ class Char extends Model
     {
       return $this->belongsToMany('App\Aturan', 'aturan_char');
     }
+
+    public function check(){
+      return $this->hasMany('App\Check','char_id_karakteristik', 'id_karakteristik');
+    }
 }

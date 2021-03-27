@@ -13,7 +13,7 @@
 
 
 Route::group(['middleware' => ['web']], function () {
-
+    Route::get('/cek-token', 'CekToken@cekToken');
     //Front
     Route::get('/', 'PagesController@getIndex')->name('home');
     Route::get('GetStarted', 'PagesController@getStarted');

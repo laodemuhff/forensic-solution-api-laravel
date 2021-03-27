@@ -16,6 +16,6 @@ class History extends Model
 
     public function aturans()
     {
-      return $this->belongsToMany('App\Aturan');
+      return $this->belongsTo('App\Aturan', 'id_aturan');
     }
 }

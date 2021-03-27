@@ -11,7 +11,7 @@
             <div class="card bg-success text-white shadow">
 
                 <div class="card-body">
-                    {{Auth::user()->name}}, Anda login sebagai Admin.
+                    {{Auth::user()->name}}, Login as Admin.
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Fungtionality</div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Functionality</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $fungs }}</div>
                         </div>
 
@@ -90,7 +90,47 @@
         <div class="col-xl-12 col-lg-11">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Latest Histories</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Top 5 Recommended Rule</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Rule</th>
+                                    <th>Tool</th>
+                                    <th>Count</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($histories as $history)
+                                <tr>
+                                    <?php
+                                    $namaaturan = DB::table('aturan')->where('id_aturan', $history->id_aturan)->value('nama_aturan');
+                                    ?>
+                                    <td>{{ $namaaturan }}</td>
+                                    <?php
+                                    $idaplikasi = DB::table('aturan')->where('id_aturan', $history->id_aturan)->value('id_aplikasi');
+                                    $namaaplikasi = DB::table('apps')->where('id_aplikasi', $idaplikasi)->value('nama_aplikasi');
+                                    ?>
+                                    <td>{{ $namaaplikasi }}</td>
+                                    <td>{{ $history->aturan }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-xl-12 col-lg-11">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">New Fact</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -99,30 +139,28 @@
                                 <tr>
                                     <th>#</th>
                                     <th>User</th>
-                                    <th>Rule</th>
+                                    <th>New Fact</th>
                                     <th>Created_at</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                @foreach ($histories as $history)
+                                @foreach ($news as $new)
                                 <tr>
-                                    <th>{{ $history->id }}</th>
+                                <th>{{ $new->id }}</th>
                                     <?php
-                                    $namauser = DB::table('users')->where('id', $history->id_user)->value('name');
+                                    $namauser = DB::table('users')->where('id', $new->id_user)->value('name');
                                     ?>
                                     <td>{{ $namauser }}</td>
-                                    <?php
-                                    $namaaturan = DB::table('aturan')->where('id_aturan', $history->id_aturan)->value('nama_aturan');
-                                    ?>
-                                    <td>{{ $namaaturan }}</td>
-                                    <td>{{ $history->created_at }}</td>
+                                    <td>{{ $new->karakteristik }}</td>
+                                    <td>{{ $new->created_at }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -134,7 +172,7 @@
             <div class="card bg-success text-white shadow">
 
                 <div class="card-body">
-                    {{Auth::user()->name}}, Anda login sebagai User.
+                    {{Auth::user()->name}}, Login as User.
                 </div>
             </div>
         </div>
@@ -143,28 +181,28 @@
         <div class="col">
             <div class="card text-center">
                 <div class="card-body text-center">
-                    <h2 class="card-title text-primary">Alur Proses Sistem</h2>
+                    <h2 class="card-title text-primary">System process flow</h2>
                     <div class="row no-gutters align-items-center text-center">
                         <div class="col-md-2 bg-primary text-white shadow p-2 rounded">
-                            <div class="mb-1 text-center">Memilih Fungsionalitas dan Karakteristik</div>
+                            <div class="mb-1 text-center">User Chooses Menu Check Tools</div>
                         </div>
                         <div class="col text-center"><i class="text-primary fas fa-chevron-right fa-2x"></i>
                         </div>
 
                         <div class="col-md-2 bg-primary text-white shadow p-2 rounded">
-                            <div class="mb-1 text-center"> Melakukan Pengecekan Data</div>
+                            <div class="mb-1 text-center"> User Chooses Functionality and Characteristics</div>
                         </div>
                         <div class="col text-center"><i class="text-primary fas fa-chevron-right fa-2x"></i>
                         </div>
 
                         <div class="col-md-2 bg-primary text-white shadow p-2 rounded">
-                            <div class="mb-1 text-center"> Menampilkan Hasil Aplikasi</div>
+                            <div class="mb-1 text-center"> Data Checking</div>
                         </div>
                         <div class="col text-center"><i class="text-primary fas fa-chevron-right fa-2x"></i>
                         </div>
 
                         <div class="col-md-2 bg-primary text-white shadow p-2 rounded">
-                            <div class="mb-1 text-center"> Menyimpan Hasil Aplikasi</div>
+                            <div class="mb-1 text-center"> Showing Tool Results</div>
                         </div>
                     </div>
                 </div>

@@ -7,8 +7,8 @@
     <div class="row">
     <div class="col">
      
-    <span class="title">Tools Mobile<br/>Forensik.</span>
-        <p class="col-md-7">Expert System dalam pemilihan tools untuk investigasi mobile forensik</p>
+    <span class="title">Tools Digital<br/>Forensik.</span>
+        <p class="col-md-7">Expert System dalam pemilihan tools untuk investigasi digital forensik</p>
     </div>
     <div class="col">
     <div class="row justify-content-center">

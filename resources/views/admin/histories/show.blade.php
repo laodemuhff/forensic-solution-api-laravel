@@ -12,7 +12,6 @@
                 </div>
                 <div class="card-body">
                     <?php
-                    
                             $resultnamaaturan = DB::table('aturan')->where('id_aturan', $idaturan)->value('nama_aturan');
                             $resultidchar = DB::table('aturan_char')->where('aturan_id_aturan', $idaturan)->get()->pluck('char_id_karakteristik');
                             $resultidaplikasi = DB::table('aturan')->where('id_aturan', $idaturan)->value('id_aplikasi');
@@ -20,7 +19,6 @@
                             $resultketaplikasi = DB::table('apps')->where('id_aplikasi', $resultidaplikasi)->value('keterangan');
                             $resultidfung = DB::table('app_fung')->where('app_id_aplikasi', $resultidaplikasi)->get()->pluck('fung_id_fungsionalitas');
                             echo "<h2>" . $resultnamaaplikasi . "</h2>";
-                            echo $resultketaplikasi;
                             echo "<div class='row'>
                             <div class='col-sm'><div class='card'><div class='card-header'>
                             Characteristics
@@ -38,7 +36,9 @@
                                 $resultnamafungsionalitas = DB::table('fungs')->where('id_fungsionalitas', $rf)->value('nama_fungsionalitas');
                                 echo "<li class='list-group-item'>" . $resultnamafungsionalitas . "</li>";
                             }
-                            echo "</ul></div></div></div>";
+                            echo "</ul></div></div></div><br/>";
+                            
+                            echo $resultketaplikasi;
                     ?>
                 </div>
             </div>

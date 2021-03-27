@@ -10,58 +10,85 @@ use App\Char;
 use App\App;
 use Session;
 use Purifier;
+use DB;
 use Image;
 use Storage;
 
 
 class AturanController extends Controller
 {
-  public function __construct() {
+  public function __construct()
+  {
     $this->middleware('auth');
   }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        // create a variable and store all the blog aturan in it from the database
-        $aturans = Aturan::all();
-        //return a view and pass in the above variable
-        return view('admin.rules.index')->withAturans($aturans);
-    }
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function index()
+  {
+    // create a variable and store all the blog aturan in it from the database
+    $aturans = Aturan::all();
+    //return a view and pass in the above variable
+    return view('admin.rules.index')->withAturans($aturans);
+  }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-      $apps = App::all();
-      $chars = Char::all();
-      $chars2 = array();
-      foreach ($chars as $char) {
-        $chars2[$char->id_karakteristik] = $char->jenis_karakteristik.' - '.$char->nama_karakteristik;
+  /**
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function create()
+  {
+    $apps = App::all();
+    $chars = Char::all();
+    $chars2 = array();
+    foreach ($chars as $char) {
+      $chars2[$char->id_karakteristik] = $char->jenis_karakteristik . ' - ' . $char->nama_karakteristik;
+    }
+    return view('admin.rules.create')->withApps($apps)->withChars($chars2);
+  }
+
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function store(Request $request)
+  {
+    //  validate the data
+    $this->validate($request, array(
+      'nama_aturan' => 'required|max:255',
+      'id_aplikasi' => 'required|integer',
+    ));
+
+    $arrayinput = $request->chars;
+
+    $idaturan = DB::table('aturan')->get()->pluck('id_aturan');
+    $idaturanall[] = $idaturan->all();
+
+    foreach ($idaturanall as $row => $innerArray) {
+      foreach ($innerArray as $innerRow => $value) {
+        $idaturanchar = DB::table('aturan_char')->where('aturan_id_aturan', $value)->get()->pluck('char_id_karakteristik');
+        $idaturancharall[] = $idaturanchar->all();
+        $valueall[] = $value;
       }
-        return view('admin.rules.create')->withApps($apps)->withChars($chars2);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //  validate the data
-        $this->validate($request, array(
-          'nama_aturan' => 'required|max:255',
-          'id_aplikasi' => 'required|integer',
-        ));
+    $k = false;
+    $arrayfilter = array_filter($arrayinput);
+    $arrayreindex = array_values($arrayfilter);
 
+    for ($i = 0; $i < count($idaturancharall); $i++) {
+      $kar = ($idaturancharall[$i] == $arrayreindex);
+      if ($kar) {
+        $k = true;
+      }
+    }
+    if ($k === false) {
+      echo 'Sukses <br/>';
       // store in the database
       $aturan = new Aturan;
 
@@ -70,110 +97,113 @@ class AturanController extends Controller
 
       $aturan->save();
 
-      
+
       if (isset($request->chars)) {
         $aturan->chars()->sync($request->chars);
-    }else {
+      } else {
+        $aturan->chars()->sync(array());
+      }
+
+      Session::flash('success', 'New rule was successfully created!');
+
+      return redirect()->route('rules.index');
+    } else {
+      Session::flash('danger', 'Rules with these characteristics already exist!');
+
+      return redirect()->route('rules.index');
+    }
+  }
+
+  /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function show($id_aturan)
+  {
+    $aturan = Aturan::find($id_aturan);
+    return view('admin.rules.show')->withAturan($aturan);
+  }
+
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function edit($id_aturan)
+  {
+    // find the aturan in the database and save that as a variable
+    $aturan = Aturan::find($id_aturan);
+    $apps = App::all();
+    $cats = array();
+    foreach ($apps as $app) {
+      $cats[$app->id_aplikasi] = $app->nama_aplikasi;
+    }
+
+    $chars = Char::all();
+    $chars2 = array();
+    foreach ($chars as $char) {
+      $chars2[$char->id_karakteristik] = $char->jenis_karakteristik . ' - ' . $char->nama_karakteristik;
+    }
+    //return the view and pass in the variablie we previously created
+    return view('admin.rules.edit')->withAturan($aturan)->withApps($cats)->withChars($chars2);
+  }
+
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $request, $id_aturan)
+  {
+    // Validate the data before we use it
+    $aturan = Aturan::find($id_aturan);
+
+    $this->validate($request, array(
+      'nama_aturan' => 'required|max:255',
+      'id_aplikasi' => 'required|integer',
+    ));
+
+    // Save the data to the SQLiteDatabase
+    $aturan = Aturan::find($id_aturan);
+
+    $aturan->nama_aturan = $request->input('nama_aturan');
+    $aturan->id_aplikasi = $request->input('id_aplikasi');
+
+    $aturan->save();
+
+    if (isset($request->chars)) {
+      $aturan->chars()->sync($request->chars);
+    } else {
       $aturan->chars()->sync(array());
     }
 
 
 
-      Session::flash('success', 'New rule was successfully created!');
+    // set flash data with success message
+    Session::flash('success', 'This rule was successfully saved.');
+    // redirect with flash data to rules.show
+    return redirect()->route('rules.show', $aturan->id_aturan);
+  }
 
-      return redirect()->route('rules.index');
-    }
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function destroy($id_aturan)
+  {
+    $aturan = Aturan::find($id_aturan);
+    $aturan->chars()->detach();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id_aturan)
-    {
-        $aturan = Aturan::find($id_aturan);
-        return view('admin.rules.show')->withAturan($aturan);
-    }
+    $aturan->delete();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id_aturan)
-    {
-        // find the aturan in the database and save that as a variable
-        $aturan = Aturan::find($id_aturan);
-        $apps = App::all();
-        $cats = array();
-        foreach ($apps as $app) {
-          $cats[$app->id_aplikasi] = $app->nama_aplikasi;
-        }
-
-        $chars = Char::all();
-        $chars2 = array();
-        foreach ($chars as $char) {
-          $chars2[$char->id_karakteristik] = $char->jenis_karakteristik.' - '.$char->nama_karakteristik;
-        }
-        //return the view and pass in the variablie we previously created
-        return view('admin.rules.edit')->withAturan($aturan)->withApps($cats)->withChars($chars2);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id_aturan)
-    {
-        // Validate the data before we use it
-        $aturan = Aturan::find($id_aturan);
-
-        $this->validate($request, array(
-          'nama_aturan' => 'required|max:255',
-          'id_aplikasi' => 'required|integer',
-        ));
-
-        // Save the data to the SQLiteDatabase
-        $aturan = Aturan::find($id_aturan);
-
-        $aturan->nama_aturan = $request->input('nama_aturan');
-        $aturan->id_aplikasi = $request->input('id_aplikasi');
-
-        $aturan->save();
-
-        if (isset($request->chars)) {
-            $aturan->chars()->sync($request->chars);
-        }else {
-          $aturan->chars()->sync(array());
-        }
-
-
-
-        // set flash data with success message
-        Session::flash('success', 'This rule was successfully saved.');
-        // redirect with flash data to rules.show
-        return redirect()->route('rules.show', $aturan->id_aturan);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id_aturan)
-    {
-        $aturan = Aturan::find($id_aturan);
-        $aturan->chars()->detach();
-
-        $aturan->delete();
-
-        Session::flash('success', 'The rule was successfully deleted.');
-        return redirect()->route('rules.index');
-    }
+    Session::flash('success', 'The rule was successfully deleted.');
+    return redirect()->route('rules.index');
+  }
 }

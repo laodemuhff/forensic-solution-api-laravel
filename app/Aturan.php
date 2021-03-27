@@ -21,6 +21,10 @@ class Aturan extends Model
 
     public function histories()
     {
-      return $this->belongsToMany('App\History', 'history_aturan');
+      return $this->hasMany('App\History', 'id_aturan');
+    }
+
+    public function check(){
+      return $this->hasMany('App\Check','aturan_id_aturan', 'id_aturan');
     }
 }

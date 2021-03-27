@@ -71,7 +71,7 @@
       <li class="nav-item active">
         <a class="nav-link" href="/admin/new">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>New</span></a>
+          <span>New Fact</span></a>
       </li>
 
       <!-- Divider -->
@@ -88,16 +88,17 @@
       <hr class="sidebar-divider">
 
       <li class="nav-item active">
-        <a class="nav-link" href="/admin/profil">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Profil</span></a>
-      </li>
-
-      <li class="nav-item active">
         <a class="nav-link" href="/admin/histories">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Histories</span></a>
       </li>
+      
+      <li class="nav-item active">
+        <a class="nav-link" href="/admin/profil">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Profile</span></a>
+      </li>
+
       @endif
 
       <!-- Sidebar Toggler (Sidebar) -->

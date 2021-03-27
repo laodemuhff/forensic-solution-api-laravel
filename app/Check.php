@@ -19,6 +19,10 @@ class Check extends Model
 
     public function chars()
     {
-      return $this->belongsToMany('App\Char');
+      return $this->belongsTo('App\Char', 'char_id_karakteristik', 'id_karakteristik');
+    }
+
+    public function aturans(){
+      return $this->belongsTo('App\Aturan', 'aturan_id_aturan', 'id_aturan');
     }
 }

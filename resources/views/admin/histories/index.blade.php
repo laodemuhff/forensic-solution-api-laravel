@@ -17,6 +17,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Rule</th>
+                                    <th>Tool</th>
                                     <th>Created_at</th>
                                     <th></th>
                                 </tr>
@@ -30,6 +31,11 @@
                                     $namaaturan = DB::table('aturan')->where('id_aturan', $history->id_aturan)->value('nama_aturan');
                                     ?>
                                     <td>{{ $namaaturan }}</td>
+                                    <?php
+                                    $idaplikasi = DB::table('aturan')->where('id_aturan', $history->id_aturan)->value('id_aplikasi');
+                                    $namaaplikasi = DB::table('apps')->where('id_aplikasi', $idaplikasi)->value('nama_aplikasi');
+                                    ?>
+                                    <td>{{ $namaaplikasi }}</td>
                                     <td>{{ $history->created_at }}</td>
                                     <td><a href="{{ route('histories.show', $history->id_aturan) }}" class="btn btn-primary">View</a>
                                         <button class="btn btn-danger" data-toggle="modal" data-target="#modal-delete-{{ $history->id }}">Delete</button></td>
